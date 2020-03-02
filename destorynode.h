@@ -1,0 +1,1 @@
+void destoryNode(Node *head);
