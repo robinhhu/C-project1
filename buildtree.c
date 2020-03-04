@@ -3,6 +3,8 @@
 #include <math.h>
 #include "treestructure.h"
 #include "buildtree.h"
+#include "removechildren.h"
+#include "nodeValue.h"
 
 // make a node at given location (x,y) and level
 
@@ -13,6 +15,7 @@ Node *makeNode( double x, double y, int level ) {
   Node *node = (Node *)malloc(sizeof(Node));
 
   node->level = level;
+  node->flag = 0;
 
   node->xy[0] = x;
   node->xy[1] = y;
@@ -45,8 +48,7 @@ void makeChildren( Node *parent ) {
 // visit every leaf node and add children
 
 void growtree(Node *node) {
-	if (node->child[0] != NULL)
-	{
+	if (node->child[0] != NULL) {
 		int i;
 		for (i = 0;i < 4;i ++)
 			growtree(node->child[i]);
@@ -56,3 +58,62 @@ void growtree(Node *node) {
 	return;
 }
 
+// produce a value for every leaf node and set a flag
+
+void flagQuadtree(Node *node) {
+	if (node->child[0] != NULL) {
+		int i;
+		for (i = 0;i < 4;i ++)
+			flagQuadtree(node->child[i]);
+	}
+	else {
+		double value = nodeValue(node, 0.0);
+		if (value > 0.5)
+			node->flag = 1;
+		else if (value < -0.5)
+			node->flag = -1;
+	}
+	return;
+}
+			
+// making data-dependent Quadtree
+
+void modifyTree(Node *node, int num[]) {
+	if (node->child[0] != NULL) {
+		int i, flagminus;
+		flagminus = 0;
+		for (i = 0;i < 4;i ++) {
+			if (node->child[i]->flag == -1)
+				flagminus ++;
+		}
+		if (flagminus == 4) {
+			removeChildren(node);
+			num[0] += 4;
+		}
+		else {
+			for (i = 0;i < 4;i ++) {
+				modifyTree(node->child[i],num);
+			}
+		}
+	}
+	else {
+		if (node->flag == 1) {
+			makeChildren(node);
+			num[1] += 4;
+		}
+	}
+	return;
+}
+
+// print out the number of nodes added or removed
+void printout(Node *head) {
+	flagQuadtree(head);
+	int num[2];
+	num[0] = 0;
+	num[1] = 0;
+	
+	modifyTree(head,num);
+	
+	printf("Added %d nodes, removed %d nodes.\n",num[1],num[0]);
+	return;
+}

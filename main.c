@@ -6,6 +6,7 @@
 #include "writetree.h"
 #include "destorytree.h"
 #include "removechildren.h"
+#include "nodeValue.h"
 
 int main( int argc, char **argv ) {
 
@@ -17,6 +18,10 @@ int main( int argc, char **argv ) {
   // grow the tree
   growtree( head );
   growtree( head );
+
+  // add node value to each node, modify the tree depend on the value
+  // and print out the number of nodes added and removed.
+  printout( head );
 
   // remove the children
   removeChildren( head->child[1]);
