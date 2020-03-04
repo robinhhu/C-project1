@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include "treestructure.h"
-#include "destorynode.h"
+#include "destorytree.h"
 
 
-//void destoryNode(Node *head) {
+//void destoryTree(Node *head) {
 //	if (head -> child[0]) {
 //		int i;
 //		for(i = 0;i < 4;i ++)
@@ -19,11 +19,11 @@
 //}
 
 // traverse through all the leaf and free all the nodes
-void destoryNode(Node *head) {
+void destoryTree(Node *head) {
 	if(head != NULL) {
 		int i;
 		for(i = 0;i < 4;i ++)
-			destoryNode(head -> child[i]);
+			destoryTree(head -> child[i]);
 		free(head);
 	}
 }
