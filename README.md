@@ -13,3 +13,6 @@ The initial code was valid but it did not peoduce the expired result. Which mean
 nodes that had child at the beginning still.
 And the main reason the algorism failed was I performed the traversal in a preorder way. So it was hard for me to free the head nodes after
 freeing the leaf nodes.
+
+Update March 4th, after finishing the tast2. Coding process went pretty well. And the test and demostration had been screenshoted.
+The algorism was based on the design decision that we assume all children nodes are leaf nodes. So simply traverse through all the children, free the nodes and then set the pointer to children to NULL.
