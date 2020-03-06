@@ -79,6 +79,7 @@ void flagQuadtree(Node *node) {
 // making data-dependent Quadtree
 
 void modifyTree(Node *node, int num[]) {
+	int MaxLevel = 6;
 	if (node->child[0] != NULL) {
 		int i, flagminus;
 		flagminus = 0;
@@ -97,7 +98,7 @@ void modifyTree(Node *node, int num[]) {
 		}
 	}
 	else {
-		if (node->flag == 1) {
+		if (node->flag == 1 && node->level < MaxLevel) {
 			makeChildren(node);
 			num[1] += 4;
 		}
@@ -106,14 +107,25 @@ void modifyTree(Node *node, int num[]) {
 }
 
 // print out the number of nodes added or removed
-void printout(Node *head) {
+void dtdependentTree(Node *head, int num[]) {
 	flagQuadtree(head);
-	int num[2];
-	num[0] = 0;
-	num[1] = 0;
 	
 	modifyTree(head,num);
 	
 	printf("Added %d nodes, removed %d nodes.\n",num[1],num[0]);
+	return;
+}
+
+// continue running until no nodes added or removed
+void adapt(Node *node) {
+	while(1) {
+		int num[2];
+		num[0] = 0;
+		num[1] = 0;
+		dtdependentTree(node, num);
+		if (num[0] == 0 && num[1] == 0)
+			break;
+	}
+
 	return;
 }

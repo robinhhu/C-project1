@@ -18,13 +18,17 @@ int main( int argc, char **argv ) {
   // grow the tree
   growtree( head );
   growtree( head );
+  growtree( head );
 
   // add node value to each node, modify the tree depend on the value
   // and print out the number of nodes added and removed.
-  printout( head );
+  //dtdependentTree( head );
+
+  // continue adding or removing nodes until a predetermined scale
+  adapt( head );
 
   // remove the children
-  removeChildren( head->child[1]);
+  //removeChildren( head->child[1]);
 
   // print the tree for Gnuplot
   writeTree( head );
