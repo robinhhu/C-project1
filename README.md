@@ -16,3 +16,5 @@ freeing the leaf nodes.
 
 Update March 4th, after finishing the tast2. Coding process went pretty well. And the test and demostration had been screenshoted.
 The algorism was based on the design decision that we assume all children nodes are leaf nodes. So simply traverse through all the children, free the nodes and then set the pointer to children to NULL.
+
+Also March 4th, finish half of the task3. That is, write a data-dependent tree. The first stage is pretty straight-forward, just do it in a recursive way. The second stage, however, require us to print out the number of nodes added or removed. Since the function is recursive, it's hard to count the result and print it only once. And that's why the idea of pointer comes into places. What I need to do is to pass a pointer as an argument to the function. And print the result out of function later.
