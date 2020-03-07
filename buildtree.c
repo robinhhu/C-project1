@@ -47,8 +47,10 @@ void makeChildren( Node *parent ) {
 
 // visit every leaf node and add children
 
-void growtree(Node *node) {
-	if (node->child[0] != NULL) {
+void growtree(Node *node) 
+{
+	if (node->child[0] != NULL) 
+	{
 		int i;
 		for (i = 0;i < 4;i ++)
 			growtree(node->child[i]);
@@ -60,13 +62,16 @@ void growtree(Node *node) {
 
 // produce a value for every leaf node and set a flag
 
-void flagQuadtree(Node *node) {
-	if (node->child[0] != NULL) {
+void flagQuadtree(Node *node) 
+{
+	if (node->child[0] != NULL) 
+	{
 		int i;
 		for (i = 0;i < 4;i ++)
 			flagQuadtree(node->child[i]);
 	}
-	else {
+	else 
+	{
 		double value = nodeValue(node, 0.0);
 		if (value > 0.5)
 			node->flag = 1;
@@ -75,50 +80,63 @@ void flagQuadtree(Node *node) {
 	}
 	return;
 }
-			
+		
 // making data-dependent Quadtree
 
-void modifyTree(Node *node, int num[]) {
+void modifyTree(Node *node, int num[]) 
+{
 	int MaxLevel = 6;
-	if (node->child[0] != NULL) {
+
+	if (node->child[0] != NULL) 
+	{
 		int i, flagminus;
 		flagminus = 0;
-		for (i = 0;i < 4;i ++) {
+		for (i = 0;i < 4;i ++) 
+		{
 			if (node->child[i]->flag == -1)
 				flagminus ++;
 		}
-		if (flagminus == 4) {
+		if (flagminus == 4) 
+		{
 			removeChildren(node);
 			num[0] += 4;
 		}
-		else {
-			for (i = 0;i < 4;i ++) {
+		else 
+		{
+			for (i = 0;i < 4;i ++) 
+			{
 				modifyTree(node->child[i],num);
 			}
 		}
 	}
-	else {
-		if (node->flag == 1 && node->level < MaxLevel) {
+	else 
+	{
+		if (node->flag == 1 && node->level < MaxLevel) 
+		{
 			makeChildren(node);
 			num[1] += 4;
 		}
 	}
+
 	return;
 }
 
 // print out the number of nodes added or removed
-void dtdependentTree(Node *head, int num[]) {
+void dtdependentTree(Node *head, int num[]) 
+{
 	flagQuadtree(head);
-	
 	modifyTree(head,num);
 	
 	printf("Added %d nodes, removed %d nodes.\n",num[1],num[0]);
+
 	return;
 }
 
 // continue running until no nodes added or removed
-void adapt(Node *node) {
-	while(1) {
+void adapt(Node *node) 
+{
+	while(1) 
+	{
 		int num[2];
 		num[0] = 0;
 		num[1] = 0;
